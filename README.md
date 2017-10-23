@@ -1,1 +1,1 @@
-Click [here](https://mechwiz.github.io/Portfolio/) to go to my Profile Website
+Click [here](https://mechwiz.github.io/Portfolio/) to go to my Portfolio Website

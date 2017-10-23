@@ -9,8 +9,8 @@ description:  |
 owner: Michael Wiznitzer # or company name
 first_published: 2017 # if migrating another site, the year of your first publish
 email: MichaelWiznitzer2018@u.northwestern.edu
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://mechwiz.github.io/Portfolio/" # the base hostname & protocol for your site
+baseurl: "/Portfolio" # the subpath of your site, e.g. /blog
+url: "https://mechwiz.github.io" # the base hostname & protocol for your site
 social:
   #twitter: https://twitter.com/<username>
   github: https://github.com/mechwiz

@@ -1,19 +1,20 @@
 ---
 layout: landing
 ---
+
 				<!-- Banner -->
 					<section id="banner">
 						<div class="inner">
 							<h2>{{ site.title }}</h2>
 							<p>{{ site.description | markdownify }}</p>
-							<ul class="actions">
+							<!--<ul class="actions">
 								<li><a href="#" class="button special">Activate</a></li>
-							</ul>
+							</ul> -->
 						</div>
-						<a href="#one" class="more scrolly">Learn More</a>
+						<a href="#projects" class="more scrolly">View Projects</a>
 					</section>
 
-				<!-- One -->
+				<!-- One
 					<section id="one" class="wrapper style1 special">
 						<div class="inner">
 							<header class="major">
@@ -28,10 +29,10 @@ layout: landing
 								<li><span class="icon fa-code major style3"><span class="label">Dolor</span></span></li>
 							</ul>
 						</div>
-					</section>
+					</section> -->
 
 				<!-- Two -->
-					<section id="two" class="wrapper alt style2">
+					<section id="projects" class="wrapper alt style2">
 						<section class="spotlight">
 							<div class="image"><img src="images/pic01.jpg" alt="" /></div><div class="content">
 								<h2>Magna primis lobortis<br />
@@ -55,7 +56,44 @@ layout: landing
 						</section>
 					</section>
 
-				<!-- Three -->
+					<section id="about" class="wrapper style1 special">
+						<div class="inner">
+							<header class="major">
+								<div class="row">
+									<div class="6u 12u$(medium)">
+										<h2>Interests</h2>
+										<ul>
+											<li>Autonomy</li>
+											<li>Path Planning</li>
+											<li>Computer Vision</li>
+											<li>Machine Learning</li>
+											<li>Artificial Intelligence</li>
+											<li>Embedded Systems</li>
+											<li>Algorithm Design</li>
+											<li>Robotic Swarms</li>
+										</ul>
+									</div>
+									<div class="6u$ 12u$(medium)">
+										<h2>About</h2>
+											<p align="left">Coming from a Mechanical Engineering background, I am currently pursuing a MS in Robotics at Northwestern University. My main objective is to study autonomous robotics, which involves path planning, AI, computer vision, algorithm design, embedded systems, controls, and a lot of other good stuff. With technology advancing as quickly as it is, my vision is to hop on the engineering bandwagon and use these skills in tandem with others to help better society in any way I can.</p>
+											<p align="right"><b>-Mike</b></p>
+									</div>
+								</div>
+
+								<hr />
+								
+							<p align="left"><b>Want to learn more?</b> Check out my <a href="https://www.linkedin.com/in/michael-wiznitzer" target="blank">LinkedIn profile</a>, <!--download my <a href="test.pdf" target="blank">résumé</a>,--> or send me an <a href="mailto:michaelwiznitzer2018@u.northwestern.edu">e-mail</a> using the links below.</p>
+
+							</header>
+
+							<ul class="icons major">
+								<li><a href="https://www.linkedin.com/in/michael-wiznitzer" target="blank" class="icon fa-linkedin-square fa-3x"><span class="label">LinkedIn</span></a></li>
+								<!--<li><a href="resume.pdf" target="blank" class="icon fa-file-pdf-o fa-3x"><span class="label">Resume</span></a></li>-->
+								<li><a href="mailto:michaelwiznitzer2018@u.northwestern.edu" class="icon fa-envelope-o fa-3x"><span class="label">Email</span></a></li>
+							</ul>
+						</div>
+					</section>
+				<!-- Three 
 					<section id="three" class="wrapper style3 special">
 						<div class="inner">
 							<header class="major">
@@ -90,18 +128,43 @@ layout: landing
 								</li>
 							</ul>
 						</div>
-					</section>
+					</section> -->
 
 				<!-- CTA -->
-					<section id="cta" class="wrapper style4">
+					<section id="contact" class="wrapper style4">
 						<div class="inner">
 							<header>
-								<h2>Arcue ut vel commodo</h2>
-								<p>Aliquam ut ex ut augue consectetur interdum endrerit imperdiet amet eleifend fringilla.</p>
+								<h2>Contact</h2>
+								<p>Feel free to use the form below to get a conversation started with me and I'll get in touch with you as soon as possible. Thanks! </p>
+								<!-- <h4>Contact Form</h4> -->
+								<form method="POST" action="https://formspree.io/michaelwiznitzer2018@u.northwestern.edu">
+									<div class="row uniform">
+										<div class="6u 12u$(xsmall)">
+											<input type="text" name="name" id="name" value="" placeholder="Name" />
+										</div>
+										<div class="6u$ 12u$(xsmall)">
+											<input type="email" name="email" id="email" value="" placeholder="Email Address" />
+										</div>
+										<div class="6u$ 12u$(small)">
+											<input type="checkbox" id="ishuman" name="ishuman" unchecked>
+											<label for="ishuman">Not a robot</label>
+										</div>
+										<div class="12u$">
+											<textarea name="message" id="message" placeholder="Enter your message" rows="6"></textarea>
+										</div>
+										<div class="12u$">
+											<ul class="actions">
+												<li><input type="submit" value="Send Message" class="special" /></li>
+												<li><input type="reset" value="Reset" /></li>
+											</ul>
+										</div>
+									</div>
+								</form>
 							</header>
-							<ul class="actions vertical">
+							<!--<ul class="actions vertical">
 								<li><a href="#" class="button fit special">Activate</a></li>
 								<li><a href="#" class="button fit">Learn More</a></li>
-							</ul>
+							</ul> -->
 						</div>
 					</section>
+		<!--</div> -->

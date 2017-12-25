@@ -1,0 +1,40 @@
+---
+layout: page
+title: Finger Sniper
+subtitle: Northwestern University&#58; <a href="http://www.mccormick.northwestern.edu/eecs/courses/descriptions/332.html">Intro to Computer Vision</a>
+---
+            <section>
+                <h3>Technical Skills Used</h3>
+                    <ul>
+                        <li align="left">Python</li>
+                        <li align="left">Image processing &amp; Object Detection using the <a href="https://opencv.org/">OpenCV library</a></li>
+                        <li align="left">Histogram-based Skin Color Segmentation from Training Images</li>
+                        <li align="left">Gesture Detection</li>
+                        <li align="left">Morphological Operations (Dilation, Erosion)</li>
+                        <li align="left">Gaussian Blurring</li>
+                        <li align="left">Game Interfacing using the Pygame library</li>
+                    </ul>
+                <hr />
+                <h3>How it Works</h3>
+                <p>To understand the rules of the game and how it's played, check out my team's <a href="https://github.com/mechwiz/computer_vision" target="blank">Readme</a>.</p>
+
+                <p>As is mentioned in the Readme, skin tone training data is captured from the player during the calibraiton phase of the game. The image is transformed into the HSV color space so that the HS histograms could be determined. These histograms provide the range of H and S values that should be expected from the player's hand during game play. Consequently, this makes the game robust and faster since it automatically takes into account the ambient lighting and the skin tone specific to the player's hand.</p>
+
+                <p>In order to reduce noise on the input images, the following morphological operation sequence is done:
+                <ul>
+                    <li align="left">Gaussian Blurring to reduce the weight of outlier pixels</li>
+                    <li align="left">Erosion to get rid of any noise left behind by the blurring process
+                    <li align="left">Dilation to fill in any gaps that should now mostly exist on the target image and not around noisy pixels (which should be at a minimum after the previous 2 processes)</li>
+                </ul>
+                Before and after morphological-operation sample pictures are shown below.</p>
+                <div class="row uniform 50%">
+                <div class="5u"><span class="image fit"><img src="images/sniper_mo1.png" alt="" /></span></div>
+                <div class="5u"><span class="image fit"><img src="images/sniper_mo2.png" alt="" /></span></div>
+                </div>
+                <br/>
+
+                <p>Gesture recognition was acheived by using the ConvexHull function from OpenCV. This provides the points that make up the polygon that surrounds a player's hand. The first and second distinct maximum distances from the hand centroid represent the location of the index and thumb fingertips respectively. Then by knowing the typical ratio of the distance-to-the-thumb-tip over the distance-to-the-index-fingertip for both the open-hand and shooting-hand configurations, hand gestures could be determined.</p>
+                <hr />
+                <h3>Demo</h3>
+                    <div class="image"><img src="images/sniper.gif" alt="" /></div>
+            </section>

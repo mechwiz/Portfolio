@@ -1,0 +1,77 @@
+---
+layout: page
+title: Plinko Game Dynamics
+subtitle: Northwestern University&#58; <a href="http://www.mccormick.northwestern.edu/mechanical/courses/descriptions/314-theory-of-machines-dynamics.html">Machine Dynamics</a>
+---
+            <section>
+                <h3 align="left">Technical Skills Used</h3>
+                    <ul>
+                        <li align="left">Mathematica</li>
+                        <li align="left">Euler-Lagrange Equations</li>
+                        <li align="left">Rotational Inertia</li>
+                        <li align="left">Impact Constraints</li>
+                        <li align="left">Constrained Dynamics</li>
+                        <li align="left">External Forces</li>
+                    </ul>
+                <hr />
+                <h3>How it Works</h3>
+                <p>The square prism has the configuration $q=(x,y,\theta)$ and the following dimensions: 
+                <ul>
+                    <li lang="latex">Height=2h\ along\ the\ z\ axis </li>
+                    <li lang="latex">Width=2w\ along\ the\ y\ axis </li>
+                    <li lang="latex">Length=2l\ along\ the\ x\ axis </li>
+                </ul>
+                </p>
+                <p>The equations that define the Lagrangian Dynamics of the square are described below.
+                <ul>
+                    <li lang="latex">KE=\frac{1}{2}{V_{B}}^{T}IV_{B }</li>
+                    <li lang="latex">PE=mgy$ </li>
+                    <li lang="latex">L=KE-PE</li>
+                </ul>
+                where:
+                <ul>
+                    <li lang="latex">V_{B}=\begin{bmatrix}\dot{x} & \dot{y} & \dot{\theta}\end{bmatrix}</li>
+                    <li lang="latex">I=\begin{bmatrix}m & 0 & 0\\ 0 & m & 0\\ 0 & 0 & \frac{8}{3}hwl\left ( l^2+w^2 \right )\end{bmatrix} </li>
+                </ul>
+                </p>
+                <p>The Euler-Lagrange Equations are:
+                <ul>
+                    <li lang="latex">\frac{\mathrm{d} }{\mathrm{d} t}\left (\frac{\partial L}{\partial \dot{x}}\right )-\frac{\partial L}{\partial x}=\lambda \frac{\partial \phi}{\partial x}+F_{x}</li>
+                    <li lang="latex">\frac{\mathrm{d} }{\mathrm{d} t}\left (\frac{\partial L}{\partial \dot{y}}\right )-\frac{\partial L}{\partial y}=\lambda \frac{\partial \phi}{\partial y}+F_{y} </li>
+                    <li lang="latex">\frac{\mathrm{d} }{\mathrm{d} t}\left (\frac{\partial L}{\partial \dot{\theta}}\right )-\frac{\partial L}{\partial \theta}=\lambda \frac{\partial \phi}{\partial \theta} </li>
+                </ul>
+                where:
+                <ul>
+                    <li lang="latex">F_{x}=\begin{cases}F\cos \theta & \text{ if } x\leq 7 \\ -\frac{1}{2}\rho C_{D} A \dot{x} & \text{ if } x> 7 \end{cases}</li>
+                    <li lang="latex">F_{y}=\begin{cases}F\sin \theta & \text{ if } x\leq 7 \\ -\frac{1}{2}\rho C_{D} A \dot{y} & \text{ if } x> 7 \end{cases} </li>
+                </ul>
+                </p>
+                <p>The Impact Constraint Equations are described below.
+                <ul>
+                    <li lang="latex">\phi_{x}=x\ coordinate\ \text{of}\ T_{bs}r_{s,pin}=x_{pin}\cos\theta+y_{pin}\sin\theta-x\cos\theta-y\sin\theta</li>
+                    <li lang="latex">\phi_{y}=y\ coordinate\ \text{of}\ T_{bs}r_{s,pin}=y_{pin}\cos\theta-x_{pin}\sin\theta+x\sin\theta-y\cos\theta</li>
+                    <li lang="latex">\phi_{x,corner}=x\ coordinate\ \text{of}\ T_{sb}r_{b,pin}=\begin{cases}l\cos\theta-w\sin\theta+x & \text{ if } (x_{b},y_{b})= (l,w)\\ l\cos\theta+w\sin\theta+x & \text{ if } (x_{b},y_{b})= (l,-w)\\-l\cos\theta+w\sin\theta+x & \text{ if } (x_{b},y_{b})= (-l,-w)\\-l\cos\theta-w\sin\theta+x & \text{ if } (x_{b},y_{b})= (-l,w)\\\end{cases}</li>
+                    <li lang="latex">\phi_{y,corner}=y\ coordinate\ \text{of}\ T_{sb}r_{b,pin}=\begin{cases}w\cos\theta+l\sin\theta+y & \text{ if } (x_{b},y_{b})= (l,w)\\ -w\cos\theta+l\sin\theta+y & \text{ if } (x_{b},y_{b})= (l,-w)\\-w\cos\theta-l\sin\theta+y & \text{ if } (x_{b},y_{b})= (-l,-w)\\w\cos\theta-l\sin\theta+y & \text{ if } (x_{b},y_{b})= (-l,w)\\\end{cases}</li>
+                </ul>
+                </p>
+                <p>The Impact Update Laws are described below.
+                <ul>
+                    <li lang="latex">\frac{\partial L}{\partial \dot{x}}_{\tau^{+}}-\frac{\partial L}{\partial \dot{x}}_{\tau^{-}}=\lambda \frac{\partial \phi}{\partial x}</li>
+                    <li lang="latex">\frac{\partial L}{\partial \dot{y}}_{\tau^{+}}-\frac{\partial L}{\partial \dot{y}}_{\tau^{-}}=\lambda \frac{\partial \phi}{\partial y}</li>
+                    <li lang="latex">\frac{\partial L}{\partial \dot{\theta}}_{\tau^{+}}-\frac{\partial L}{\partial \dot{\theta}}_{\tau^{-}}=\lambda \frac{\partial \phi}{\partial \theta}</li>
+                    <li lang="latex">H_{\tau^{+}}-H_{\tau^{-}}=0</li>
+                </ul>
+                </p>
+                <p>The Impact Update Laws are called when the following events occur:
+                <ul>
+                    <li lang="latex">\text{If} \left | \phi_{x} \right | -l-radius_{pin}=0\ \text{and}\ \left | \phi_{y} \right | -w-radius_{pin}=0 \\ \text{then update}\ {x}',{y}',{\theta}'\ \text{using the update laws with}\ \phi=\phi_{x}\ \text{and}\ \phi=\phi_{y}</li>
+                    <br/>
+                    <li lang="latex">\text{If}\ \phi_{x,corner} -7=0\ \text{or}\ \phi_{x,corner} -25=0\\ \text{then update}\ {x}',{y}',{\theta}'\ \text{using the update laws with}\ \phi= \phi_{x,corner}</li>
+                    <br/>
+                    <li lang="latex">\text{If}\ \phi_{y,corner} =0\\ \text{then update}\ {x}',{y}',{\theta}'\ \text{using the update laws with}\ \phi= \phi_{y,corner}</li>
+                </ul>
+                </p>
+                <hr />
+                <h3>Demo</h3>
+                    <div class="image"><img src="images/plinko.gif" alt="" /></div>
+            </section>

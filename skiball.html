@@ -1,0 +1,46 @@
+---
+layout: page
+title: Ski-Ball Game
+subtitle: Milwaukee School of Engineering&#58; <a href="http://catalog.msoe.edu/preview_course_nopop.php?catoid=2&coid=555">Computer Applications in Engineering II</a>
+---
+            <section>
+                <h3>Technical Skills Used</h3>
+                    <ul>
+                        <li align="left">Matlab</li>
+                        <li align="left">Programming with Hardware</li>
+                    </ul>
+                <hr />
+                <h3>Hardware</h3>
+                    <ul>
+                        <li align="left"><a href="https://labjack.com/products/u12">Labjack</a></li>
+                        <li align="left">2 DC Motors</li>
+                        <li align="left">Force Sensor</li>
+                        <li align="left">Momentary Switch</li>
+                        <li align="left">XY table and power supply</li>
+                        <li align="left">IR sensor</li>
+                        <li align="left">Solar Cell</li>
+                        <li align="left">LED Board</li>
+                        <li align="left">Robot Arm</li>
+                    </ul>
+                <hr />
+                <h3>How it Works</h3>
+                <ol>
+                    <li align="left">The ball is given to the user by the robotic arm.</li>
+                    <li align="left">The force sensor is calibrated by the player pushing down on it as hard as possible.</li>
+                    <li align="left">The momentary switch should be pressed so that the robotic hand releases the ball into the player's hand.</li>
+                    <li align="left">The player pushes down on the force sensor to ramp up the DC motors on the ramp. The harder the press, the faster the spin on the motors.</li>
+                    <li align="left">The player lets the ball slide on the ramp and shoots. Once the shot is taken, hit the momentary switch to tell the program that the shot has been made.</li>
+                    <ul>
+                        <li>If the ball misses the cups, the ball will roll onto the solar cell. The sudden loss of voltage from the cell will tell the program that the ball missed and needs to be returned to the user. The program will then direct the robotic arm to pick up the ball from the cell and return it to the user.</li>
+                        <li>If the ball goes into a cup, the program will realize this by seeing that the voltage on the solar cell did not change for a timeout period. The program will then direct the robotic arm to pick up the second ball and give that to the user.</li>
+                    </ul>
+                    <li align="left">If the second ball is in play, and it goes into one of the cups, then the XY Table will move the IR sensor in its carriage above the cups to sense how many balls are in each cup. This is possible because if there are 2 balls in one cup, the distance measured by the IR sensor is shorter than if there is only one ball in the cup.</li>
+                    <ul>
+                        <li>If there are 2 balls in the first cup, then the game is over and the player loses. A losing light show is shown.</li>
+                        <li>If there is 1 ball in each cup, then the game is over and the player wins. A winning light show is shown.</li>
+                    </ul>
+                </ol>
+                <hr />
+                <h3>Demo Video</h3>
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/W5QYoDCcTA8" frameborder="0" gesture="media" allow="encrypted-media" allowfullscreen></iframe>
+            </section>

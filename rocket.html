@@ -1,0 +1,52 @@
+---
+layout: page
+title: Rocket Competition
+subtitle: <a href="https://spacegrant.carthage.edu/">Wisconsin Space Grant Consortium</a>&#58; <a href="https://spacegrant.carthage.edu/funding-programs/undergraduate/rocket-competitions/collegiate/" target="blank">Collegiate</a> and <a href="https://spacegrant.carthage.edu/funding-programs/undergraduate/rocket-competitions/regional/" target="blank">Midwest</a> Rocket Competitions
+---
+            <section>
+                <h3>Technical Skills Used</h3>
+                    <ul>
+                        <li align="left">Matlab</li>
+                        <li align="left"><a href="http://openrocket.info/">OpenRocket</a></li>
+                        <li align="left">Arduino</li>
+                        <li align="left">Soldering</li>
+                        <li align="left">Hardware Programming</li>
+                    </ul>
+                <hr />
+                <div class="row">
+                <div class="4u 12u$(medium)">
+                <h3>Hardware &amp; Layout</h3>
+                <p>The Drag Electronic's Bay for the Midwest Competition is shown to the right.</p>
+                    <ul>
+                        <li align="left">Arduino Uno</li>
+                        <li align="left">SD Shield</a></li>
+                        <li align="left">Accelerometer</li>
+                        <li align="left">Servo Motor</li>
+                        <li align="left">Buzzer</li>
+                        <li align="left">LEDs</li>
+                        <li align="left">Polaroid Cube Camera</li>
+                        <li align="left">Key Switches</li>
+                        <li align="left">ALTS25 Dual-Deployment Altimeter</li>
+                        <li align="left">GPS Tracker</li>
+                        <li align="left">AA Batteries</li>
+                        <li align="left">Microduionos (Core+,SD,10DOF)</li>
+                    </ul>
+                </div>
+                <div class="8u$ 12u$(medium)">
+                <span class="image fit"><img src="images/dragbay.jpg" alt="" /></span>
+                </div>
+                </div>
+                <hr />
+                <h3>How it Works</h3>
+                <h4>Collegiate Competition</h4>
+                <p>Gyroscope readings from the Microduino 10DOF were used to characterize the rotation data from the flight of the boosted dart. These values would then be used in a custom made Matlab program that would simulate how the dart rotated in flight. Unfortunatley, the booster and dart landed in a swamp and were never found, but a demo of what the simulator would look like based off some sample data can be seen in the Demo section.</p>
+                <h4>Midwest Competition</h4>
+                <p>The Arduino will wait until it detects a large increase of acceleration from the accelerometer (i.e. when the motor is burning). Afterwards, it will wait a predetermined amount of time until burnout occurs based on the thrust curve of the rocket motor, at which point the Arduino will trigger the air-brake motor to rotate the gears that will spin the flaps from within the rocket to an outward position through their corresponding slots located in the rocket tube surface. Afterwards, the Arduino will again wait a predetermined amount of time (the time from burnout to right before Apogee) calculated from the model flight program, at which point the Arduino will trigger the motor to retract the flaps for the duration of the flight. There are also buzzers and LEDs incorporated into the system for positive (or negative) feedback in regards to letting the user know that the system is armed and ready. The white LED will light up the space around the Polaroid Cube HD Action Camera so that footage of the airbrake system being deployed will be recorded. A demo of how the flaps deploy (not using a trigger) is shown in the Demo section.</p>
+                <hr />
+                <h3>Demo Video</h3>
+                <p>The first demo portrays how the data from the rocket designed for the Collegiate Competition would have been simulated had it been found. Instead, sample input data is used. The second demo shows how the drag system is deployed for the Midwest Competition rocket in a lab scenario.</p>
+                    <div class="row">
+                    <div class="8u"><span class="image fit"><img src="images/rocket1.gif" alt="" /></span></div>
+                    <div class="4u"><span class="image fit"><img src="images/rocket2.gif" alt="" /></span></div>
+                </div>
+            </section>

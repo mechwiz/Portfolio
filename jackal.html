@@ -1,0 +1,50 @@
+---
+layout: page
+title: Frontier Exploration
+subtitle: Northwestern University&#58; Winter Project
+---
+            <section>
+                <h3>Technical Skills Used</h3>
+                    <ul>
+                        <li align="left">Python</li>
+                        <li align="left">Rviz &amp; Gazebo</li>
+                        <li align="left">ROS</li>
+                        <li align="left">OpenCV</li>
+                        <li align="left">Navigation Stack</li>
+                        <li align="left">Pointcloud filtering with PCL</li>
+                    </ul>
+                <hr />
+                <h3>Hardware</h3>
+                <ul>
+                    <li align="left">Jackal UGV</li>
+                    <li align="left">Velodyne VLP-16 LIDAR</li>
+                    <li align="left">PointGrey Flea3 Machine Vision Camera</li>
+                </ul>
+                <h3>How it Works</h3>
+                <p>Check out my <a href="https://github.com/mechwiz/jackal_exploration" target="blank">Readme</a> to get an understanding of the setup I am working with. Below, I will provide a short summary of how my frontier exploration algorithm works.</p>
+
+                <p>The idea behind frontier exploration is to essentially find all the boundaries in a map that are between known and uknown areas and to go to them so that those frontiers can be explored which in turn will produce more frontiers. The process continues until there are no more frontiers.</p>
+
+                <p>Now back to my summary. After first sending a goal position near the robot to get the relevant topics publishing, the algorithm kicks into affect. First cost data of the cells within the map is retrieved from the /map topic. Then, global costamp data is retreived from the navstack and overlayed onto the map costmap data to take into account the static and inflation layers. With all of this data, we have a map looking much like the left most figure below. (Note, that this map was produced from the simulated world that is shown in the demo video below. Feel free to look there for a reference.) The color mappings are as follows:</p>
+                <ul>
+                    <li>Grey = Uknown Area</li>
+                    <li>White = Free Space</li>
+                    <li>Black = Occupied Space</li>
+                </ul>
+
+                <p>In order to find the frontiers, we must first know where all the edges are within the map. This is found by using the Canny edge detection algorithm which is a built in function in the OpenCV library. This produces the second-from-left picture below. This is not enough, however, since we are only interested in the frontier edges, and not the edges between the known and occupied cells. Hence, further processing is done that searches through the list of edge indices in the map and only keeps the ones that have unkown territory next to them. This produces the third picture below. Finally, the centroids of distinct frontiers are determined using OpenCV which are circled in the 4th picture below. At this point, the closest centroid is sent as the next goal for Jackal to go to.</p>
+
+
+                <div class="row uniform 50%">
+                    <div class="3u"><span class="image fit"><img src="images/costmap_update.png" alt="" /></span></div>
+                    <div class="3u"><span class="image fit"><img src="images/canny.png" alt="" /></span></div>
+                    <div class="3u"><span class="image fit"><img src="images/frontier.png" alt="" /></span></div>
+                    <div class="3u"><span class="image fit"><img src="images/circles.png" alt="" /></span></div>
+                </div>
+                 <p></p>
+                <p> To help make this process more robust, some edge cases have been taken into account in my algorithm that will enable Jackal to free itself from being stuck. You might notice some of these in the video. For example, if Jackal notices it's at the same position for too long, it will automatically re-evaluate its position and send out a new goal that it hopefully can go to. Future work involves taking into account other edge cases for better robustness which will help when using the actual Jackal for a demo.</p>
+                <hr />
+                <h3>Demo</h3>
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/x4oIJKmgQMc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+            </section>

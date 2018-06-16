@@ -1,0 +1,98 @@
+---
+layout: page
+title: Effect of Planning Depth in Predator-Prey Behavior
+subtitle: Northwestern University&#58; Final Project
+---
+            <section>
+                <h3>Technical Skills Used</h3>
+                    <ul>
+                        <li align="left">CAD (Solidworks)</li>
+                        <li align="left">Laser Cutting</li>
+                        <li align="left">Python</li>
+                        <li align="left">ROS</li>
+                        <li align="left">OpenCV</li>
+                    </ul>
+
+                <h3>Hardware</h3>
+                <ul>
+                    <li align="left">Two <a href="https://store.sphero.com/collections/sphero/products/sphero-2-0" target="blank">Sphero 2.0 Robots</a></li>
+                    <li align="left">Cameras for Image Processing</li>
+                    <li align="left">Wood for Laser Cutting</li>
+                </ul>
+
+                <hr />
+
+                <h3>Objectives</h3>
+
+                <p>The goal of this project is to demonstrate the effect of prey planning-depth for reaching some goal position before the predator kills him in a 3-D honeycomb-styled-world environment with various levels of occlusion. This project breaks down into 3 different parts listed below:</p>
+
+                <ul>
+                    <li align="left">Maze Fabrication</li>
+                    <li align="left">Sphero Control with ROS</li>
+                    <li align="left">Image Processing to determine robot locaton in maze</li>
+                </ul>
+
+                <p>The first order of business was to create the maze design since it is the playground within which the Sphero robots will be moving and from which close-loop feedback control will be implemented using image processing. Therefore, much of the Spring quarter was dedicated to accomplishing this objective.</p>
+
+                <h4>Maze Fabrication</h4>
+
+                <p>In considering the design of the maze, certain specs and constraints had to be considered which are listed below:</p>
+                <ul>
+                    <li align="left">The maze needs to incorporate honeycomb-styled cells (since a honeycomb network is derived from nature)</li>
+                    <li align="left">Each side of the hexagonal cell must be big enough to allow a Sphero to pass through it</li>
+                    <li align="left">The maze at its widest should be 17 cells across</li>
+                    <li align="left">The maze should be octogonal in shape</li>
+                    <li align="left">The occlusions should be able to withstand collision from the Sphero robots</li>
+                    <li align="left">The occlusions should be able to be removable from the maze</li>
+                    <li align="left">The occlusions should be able to be placed on any cell within the maze</li>
+                    <li align="left">There should be walls around the maze to contain the robots</li>
+                    <li align="left">The robots should be able to move from cell to cell within the maze without significant disturbance from the ground structure</li>
+                </ul>
+
+                <p>With all of these design considerations in mind, an inital rough assembled model was cadded which is shown below</p>
+                <div align="center"> <img src="images/MazeRender.JPG" width="700px"/></div>
+
+                <p>Before building the full blown model, it was decided to first build a small scale version so that initial testing could be done with the Sphero control and Image Processing algorithms. Any modifications to the structure due to testing could then be incorporated into the full-scale model.</p>
+
+                <p>The small scale structure, both model and actual are shown side by size below. This readme goes through each part in the assembly and explains its purpose.</p>
+                <div class="row uniform 50%">
+                    <div class="6u"><span class="image fit"><img src="images/smallscalesphero.PNG" alt="" /></span></div>
+                    <div class="6u"><span class="image fit"><img src="images/smallmaze.JPG" alt="" /></span></div>
+                </div>
+                <p></p>
+                <p>As can be seen from the pictures above, the idea was to make the maze structure modular. This allows setup and breakdown to be much easier and also allows for various maze sizes to potentially be constructed if desired. Furthermore, each moduler floor piece can be interconnected with its neighbors seculerly by using a jigsaw puzzle scheme inspired from this laser cut <a href="https://www.thingiverse.com/thing:124291" target="blank">Settlers of Catan</a> game.</p>
+
+                <p>Much thought went into deciding how to approach the obstacle dilema. In order for the obstacles to be seculerly in place on the board, it would logically make sense to have some sort of hole structure on the floor modules. On the flipside, having holes in the floor could potentially cause significant disturbances to the Sphero robots as they roll on the floor. As such several ideas were generated which are listed below:</p>
+                <ul>
+                    <li align="left">Using really small dowel pins (1/16 inch) so that the holes would be so small so that it would be almost negligible to the rolling trajectory of the robot</li>
+                    <li align="left">Using 1/4 inch diameter magnets that would sit in the holes flush with the surface but would at the same time hold an obstacle (with the opposite magnets on its bottom side) to the board if placed there</li>
+                    <li align="left">To use bigger diameter holes, but to implement some sort of plug that will fill in all holes not beeing occupied by obstacles</li>
+                </ul>
+
+                <p>The issue with the first idea was that it was almost impossible to align the pins from the obstacle to the holes on the floor due to such a small tolerance. The second idea would fix this issue because of the magnetic pull between the obstacle and floor, however, there was no gaurantee that the magnets would not fall out after much use, even if glued in, due to their smooth exterior, and whether they would provide sufficient force to hold the obstacle in place should the robot crash into it at full speed. Even if higher strength magnets would be used, there would need to be some layering to be done to prevent them from popping out of their holes which adds to the complexity of the design. Finally, the magnetic force could also potentially cause disturbance to the magnometer on the Sphero (if one is in there), which would not be good at all. The last idea could potentially work, but then we run into the issue of the plugs not being exactly flush with the board, and the fact that there would still need to be a way to unplug the plugged holes.</p>
+
+                <p>As it turned out after testing, 1/4 inch diameter holes did not disturb the rolling motion of the Sphero robot at all, so 1/4 inch dowel pins were used to plug in the obstacles. It should also be noted that minor warping in the wood also did not affect motion of the Sphero so even small bumps from where one module connects to the other were negligible in being manifested in the robots motion. A picture of these pins attached to the obstacle is shown below:</p>
+                <div align="center"> <img src="images/obstacle.JPG" width="700px"/></div>
+                <p></p>
+
+                <p>The obstacles were made with a hollow press-fit design in order to conserve wood. A wood backing was glued on the opposite side of where the holes are located in order to prevent the dowels from being pushed through into the hollow interior.</p>
+
+
+                <p> To help make this process more robust, some edge cases have been taken into account in my algorithm that will enable Jackal to free itself from being stuck. You might notice some of these in the video. For example, if Jackal notices it's at the same position for too long, it will automatically re-evaluate its position and send out a new goal that it hopefully can go to. Future work involves taking into account other edge cases for better robustness which will help when using the actual Jackal for a demo.</p>
+
+                <h4>Sphero Control with ROS</h4>
+                <p>The Sphero robots will be controlled using the sphero_ros package developed first by <a href="https://github.com/mmwise/sphero_ros" target="blank">Melonee Wise</a> and then further developed in the <a href="https://github.com/MurpheyLab/sphero_ros" target="blank">Murphey Lab</a>. Due to major focus on the maze fabrication, progress has yet to be made in this area. The progress that has been made is verfying that I can connect with and control the Sphero 2.0 robot using ROS Kinetic with the <a href="http://mmwise.github.io/sphero_ros/" target="blank">Sphero Ros API</a> provided by Melonee Wise. It should also be mentioned that the Sphero 2.0 robot was chosen instead of the more recent Sphero SPRK+ due to the fact that it's hackable as mentioned in the "Tech Specs" tab <a href="https://store.sphero.com/collections/sphero/products/sphero-2-0" target="blank">here</a> and because there seems to be an issue connecting to the <a href="https://store.sphero.com/collections/education/products/sprk-plus-education" target="blank">SPRK+</a> as discussed <a href="https://github.com/mmwise/sphero_ros/issues/18" target="blank">here</a>.</p>
+
+                <h4>Image Processing</h4>
+                <p>In order to determine the location of the Sphero robots within the maze, computer vision feedback will be used. Preliminarry planning for how this will work involves using multiple cameras to capture the whole board since it will be very large - around 11ft x 8.6 ft. The idea will then be to calibrate those cameras so that we know where each camera is relative to the others and the maze so that the image can be peiced together. This way, each robot's location can be determined.</p>
+
+                <hr />
+                <h3>Future Steps</h3>
+                <p>The next steps in this project will take place over the summer and Fall quarters and will include:</p>
+                <ul>
+                    <li align="left">Writing ROS control scripts to move each robot from cell to cell reliably</li>
+                    <li align="left">Writing the image processing scripts to provide the feedback loop to the ROS robotic control scripts</li>
+                    <li align="left">Incorporating any modificiaitons to the final maze design layout and laser cutting all the pieces for the full-scale maze</li>
+                </ul>
+
+            </section>

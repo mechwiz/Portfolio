@@ -16,9 +16,9 @@ subtitle: Northwestern University&#58; Winter Project
                 <hr />
                 <h3>Hardware</h3>
                 <ul>
-                    <li align="left">Jackal UGV</li>
-                    <li align="left">Velodyne VLP-16 LIDAR</li>
-                    <li align="left">PointGrey Flea3 Machine Vision Camera</li>
+                    <li align="left"><a href="https://www.clearpathrobotics.com/jackal-small-unmanned-ground-vehicle/" target="blank">Jackal UGV</a></li>
+                    <li align="left"><a href="https://velodynelidar.com/vlp-16.html" target="blank">Velodyne VLP-16 LIDAR</a></li>
+                    <li align="left"><a href="https://www.ptgrey.com/flea3-12-mp-color-usb3-vision-sony-imx172" target="blank">PointGrey Flea3 Machine Vision Camera</a></li>
                 </ul>
                 <h3>How it Works</h3>
                 <p>Check out my <a href="https://github.com/mechwiz/jackal_exploration" target="blank">Readme</a> to get an understanding of the setup I am working with. Below, I will provide a short summary of how my frontier exploration algorithm works.</p>
@@ -42,9 +42,11 @@ subtitle: Northwestern University&#58; Winter Project
                     <div class="3u"><span class="image fit"><img src="images/circles.png" alt="" /></span></div>
                 </div>
                  <p></p>
-                <p> To help make this process more robust, some edge cases have been taken into account in my algorithm that will enable Jackal to free itself from being stuck. You might notice some of these in the video. For example, if Jackal notices it's at the same position for too long, it will automatically re-evaluate its position and send out a new goal that it hopefully can go to. Future work involves taking into account other edge cases for better robustness which will help when using the actual Jackal for a demo.</p>
+                <p>To help make this process more robust, some edge cases have been taken into account in my algorithm that will enable Jackal to free itself from being stuck. You might notice some of these in the videos below. For example, if Jackal notices it's at the same position for too long, it will automatically re-evaluate its position and send out a new goal that it hopefully can go to. Future work involves taking into account other edge cases for better robustness.</p>
+                <p>Finally, a user can define the area that Jackal should explore in RViz as can be seen in the bottom right video below. This can be useful in cases where only certain areas within a building (like main hallways) need to be mapped with the exclusion of less traveled areas (like individual offices and classrooms).</p>
                 <hr />
                 <h3>Demo</h3>
+                <p>The left video demos exploration in a simulated world whereas the right video demos exploration in the hallway outside the MSR lab at Northwestern.</p>
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/x4oIJKmgQMc" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
                 <iframe width="560" height="315" src="https://www.youtube.com/embed/8slMv4ZIi4U" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </section>

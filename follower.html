@@ -1,0 +1,110 @@
+---
+layout: page
+title: Custom Line-Following Robot
+subtitle: Northwestern University&#58; <a href="https://www.mccormick.northwestern.edu/mechanical/courses/descriptions/433-advanced-mechatronics.html">Advanced Mechatronics</a>
+---
+            <section>
+                <h3>Technical Skills Used</h3>
+                    <ul>
+                        <li align="left">Embedded Programming in C on the <a href="https://www.digikey.com/product-detail/en/microchip-technology/PIC32MX250F128B-I-SP/PIC32MX250F128B-I-SP-ND/3046657">PIC32MX250F128B</a> using the <a href="http://www.microchip.com/mplab">MPLAB IDE</a></li>
+                        <li align="left">Android App Development in Java using <a href="https://developer.android.com/studio/">Android Studio</a></li>
+                        <li align="left">PCB Design using <a href="https://www.autodesk.com/products/eagle/overview">AutoDesk Eagle</a></li>
+                        <li align="left">CAD (Solidworks)</li>
+                        <li align="left">Image Processing</li>
+                        <li align="left">Laser Cutting</li>
+                        <li align="left">Soldering</li>
+                    </ul>
+                <hr />
+                <div class="row">
+                <div class="7u 12u$(medium)">
+                <h3>Hardware &amp; Layout</h3>
+                <p>The mechanical layout of the line-following robot is shown to the right. The hardware used is listed below.</p>
+                    <ul>
+                        <li align="left">Custom made PCB - includes:</li>
+                        <ul>
+                            <li align="left">PIC32MX250F128B microcontroller</a></li>
+                            <li align="left">2 status LEDs (one power, one user-configurable)</a></li>
+                            <li align="left">2 push-buttons (one master reset, one user-configurable)</a></li>
+                            <li align="left">Programming port for the PICkit3</a></li>
+                            <li align="left">USB mini port</a></li>
+                            <li align="left">Power switch</a></li>
+                            <li align="left">Header pins for connecting to the motor shield</a></li>
+                        </ul>
+                        <li align="left">Motor Control Shield</a></li>
+                        <li align="left">Android phone (Moto G Black) running Kitkat</li>
+                        <li align="left">2 Chihai <a href="https://www.aliexpress.com/item/Chihai-Motor-CHR-16G-050-ABHL-DC-6V-12V-7PPR-Encoder-Motor-Reducer-Carbon-brush-Gear/32833392055.html">CHR-16G-050-ABHL</a> 12V DC motors</li>
+                        <li align="left">Custom CADed and lasercut wooden chassis </li>
+                        <li align="left">2 Custom CADed and 3D printed wheels</li>
+                        <li align="left">Rear castor wheel</li>
+                        <li align="left">12V lithium-ion battery</li>
+                        <li align="left">USB OTG adapter</li>
+                        <li align="left">Nuts, Bolts, Wires, and Zipties</li>
+                    </ul>
+                <p>The chassis is made out of 3 lasercut components that are bolted together. One of the most challenging aspects of the physical design was ensuring that the phone was secure when the robot was running. Due to the curved bottom plate of the phone, the supporting wood was cut out such that it would be flush to the phone. Additionally, as can be seen in the picture on the right, the USB-OTG adapter was ziptied to the bottom of the chassis so that the phone would not slide backwards and would maintain a 45 degree angle from the ground. This way, the camera on the phone would have the optimum viewing angle to ensure effective image processing of the line. </p>
+                </div>
+                <div class="5u$ 12u$(medium)">
+                <span class="image fit"><img src="images/robot.JPG" alt="" /></span>
+                <span class="image fit"><img src="images/interior.JPG" alt="" /></span>
+                <span class="image fit"><img src="images/underside.JPG" alt="" /></span>
+                </div>
+                </div>
+                <hr />
+                <h3>How it Works</h3>
+                <h4>PCB Design</h4>
+                <p>One of the core tools that the class learned about was to design PCBs using AutoDesk Eagle. For this project, we each could design our PCB however we saw fit as long as the header pins were lined up appropiately such that the motor shield could be attached on top. There were also size constraints in that the board could only be 50mmx50mm. In the design, there were 2 layers. The bottom layer was ground (blue in the third picture), except where there were traces. The top layer consisted of traces which are shown in red in the third picture. The final designs can be seen below in the order of top layer, bottom layer, and both combined. The boards were then printed by <a href="https://www.pcbway.com/">PCBWay</a>, a third-party PCB manufacturer.</p>
+                <div class="row">
+                    <div class="4u"><span class="image fit"><img src="images/top_pcb.png" alt="" /></span></div>
+                    <div class="4u"><span class="image fit"><img src="images/bottom_pcb.png" alt="" /></span></div>
+                    <div class="4u"><span class="image fit"><img src="images/overall_pcb.png" alt="" /></span></div>
+                </div>
+                <p>The Eagle schematic of the wiring can be seen below.</p>
+                <div class="image fit"><img src="images/eagle_sch.png" alt="" /></div>
+                <p>The actual PCB and the accompanying motor shield is shown below. All relevant hardware was soldered on by me.</p>
+                <div class="row">
+                    <div class="4u"><span class="image fit"><img src="images/pcb.png" alt="" /></span></div>
+                    <div class="4u"><span class="image fit"><img src="images/motorshield.JPG" alt="" /></span></div>
+                    <div class="4u"><span class="image fit"><img src="images/stackedpcb.JPG" alt="" /></span></div>
+                </div>
+                <h4>Software Design</h4>
+                <p>There were 2 main components of the software design:</p>
+                    <ul>
+                        <li>The line-finding Android application</li>
+                        <li>The program running on the PIC32 microncontroller</li>
+                    </ul>
+                <div class="row">
+                <div class="7u 12u$(medium)">
+                <p>The Android app was developed in Android Studio, and essentially works as follows:</p>
+                    <ul>
+                        <li>A raw image from the camera stream is captured.</li>
+                        <li>Image Processing is done on 2 rows of pixels (seen as black lines in the gif on the right) in the top half of the frame. The idea is to find the center of mass of red pixels on each line and then to average the positions of each line to acheive a goal position input for the motor control algorithm running on the microncontroller.</li>
+                        <li>Processing includes finding the red pixels on each of those lines based on how red and bright each of those pixels are. These are set by some threshold that can be tweaked by bars on the app itself as can be seen on the right.</li>
+                        <li>Any pixel not considred red is changed to black so that only the red pixels remain. This is done because black has a low RGB value that will factor little into the COM calculations. It is also useful for user-feedback purposes.</li>
+                        <li>Assuming there is a significant amount of red on the line (which is determined by setting the sum threshold bar), the COM of the red mass is calculated and factered into the average COM of both lines.</li>
+                        <li>This average COM (which is just the column of the pixel at which the COM exists) can be seen on the App as a red dot on the second line. This position is the input into the control algorithm running on the microncontroller.</li>
+                    </ul>
+                </div>
+                <div class="5u$ 12u$(medium)">
+                <span class="image fit"><img src="images/app.gif" alt="" /></span>
+                </div>
+                </div>
+                <p>In order to connect the 2 programs, a USB OTG adapter was used so that the Android phone could become a USB host. This enabled the Android app to send values to the PIC32 microcontroller over USB CDC while the app was running. This was made possible by using MPLAB Harmony, which is a software framework for PIC32 projects.</p>
+
+                <p>The program on the PIC32 works as follows:</p>
+                    <ul>
+                        <li>First, an internal state machine is initialized.</li>
+                        <li>A socket is opened up to the Android phone via USB OTG</li>
+                        <li>The average COM data from the Android app is received by the microcontroller.</li>
+                        <li>A P-controller running at 50 Hz uses the COM input to create 2 reference inputs for the motors - one for the left motor and one for the right. This controller is used to try to steer the robot so that the red dot on the app is moved to the center of the screen. It should also be noted that the controller is set up such that there will always be some minimum forward velocity to keep the robot moving along.</li>
+                        <li>The reference input for each motor is stuck into a P-controller for each motor, though the code is technically set up to even implemnt PID controll should a user want to tune the integral and derivate gains.</li>
+                        <li>The resulting controller output from each controller is converted to PWM signals for each motor that are somewhere between 0-100% of the motor speed. The PWM frequency itself is set to 20 kHz.</li>
+
+
+                    </ul>
+                <hr />
+                <h3>Demo Video</h3>
+                <p>A demo video of the robot navigating the rainbow road track (on the right) can be seen below. Note that the 2 ends of the road are connected by a bridge that is not shown.</p>
+                <div class="row">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/4-kTivaYnKs" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <div class="5u"><span class="image fit"><img src="images/techCup2018.png" alt="" /></span></div>
+                </div>
+            </section>

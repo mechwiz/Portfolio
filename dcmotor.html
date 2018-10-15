@@ -1,0 +1,78 @@
+---
+layout: page
+title: DC Motor Control
+subtitle: Northwestern University&#58; <a href="https://www.mccormick.northwestern.edu/mechanical/courses/descriptions/333-introduction-to-mechatronics.html">Introduction to Mechatronics</a>
+---
+            <section>
+                <h3>Technical Skills Used</h3>
+                    <ul>
+                        <li align="left">Embedded Programming in C on the <a href="https://www.microchip.com/wwwproducts/en/PIC32MX795F512H">PIC32MX795F512H</a> as configured on the <a href="http://hades.mech.northwestern.edu/index.php/NU32">NU32 development board</a></li>
+                        <li align="left">Brushed DC Motor control with H-bridge, encoder, and current sensing chip</li>
+                        <li align="left">Serial Communication between the PIC and MATLAB</li>
+                        <li align="left">Current Sensor Calibration based on ADC counts</li>
+                        <li align="left">PWM via Output Compare</li>
+                        <li align="left">Interrupts and Timers</li>
+                        <li align="left">PID Controller Design</li>
+                    </ul>
+                <hr />
+                <div class="row">
+                <div class="8u 12u$(medium)">
+                <h3>Hardware</h3>
+                    <ul>
+                        <li align="left">Brushed DC motor with encoder</li>
+                        <li align="left">NU32 microncontroller board (with the PIC32MX795F512H)</a></li>
+                        <li align="left">PCB with quadrature encoder counter chip</li>
+                        <ul style="margin-bottom:0px;">
+                            <li type="circle" align="left">connected via SPI to the NU32</li>
+                        </ul>
+                        <li align="left">PCB with MAX9918 current-sense amplifier and a built-in 15 $m\Omega$ current-sense resistor </li>
+                        <ul style="margin-bottom:0px;">
+                            <li type="circle" align="left">provides a voltage proportional to the motor current which is received by an ADC input pin on the NU32</li>
+                        </ul>
+                        <li align="left">PCB with the DRV8835 H-bridge</li>
+                        <ul style="margin-bottom:0px;">
+                            <li type="circle" align="left">attached to a PWM/OC channel on the NU32</li>
+                        </ul>
+                        <li align="left">6V Battery pack</li>
+                        <li align="left">Various resistors and capacitors</li>
+                    </ul>
+                </div>
+                <div class="4u$ 12u$(medium)">
+                <span class="image fit"><img src="images/motor_layout.png" alt="" /></span>
+                </div>
+                </div>
+                <hr />
+                <h3>How it Works</h3>
+                <p>The final project for the class was to control the DC Motor such that it could track some given reference trajectory. This was accomplished by following the block diagram (taken from the class  <a href="https://books.google.com/books/about/Embedded_Computing_and_Mechatronics_with.html?id=TipOBQAAQBAJ&printsec=frontcover&source=kp_read_button#v=onepage&q&f=false"target="_blank">textbook</a>) shown below:</p>
+                <figure style="margin-left: 10%; margin-right: 10%; margin-bottom: 0.5em;">
+                    <img src="images/block-diagram.jpg" style= "width: 100%;">
+                </figure>
+                <figure style= "text-align: center; float: right; width: 40%; margin-left: 2%; font-style: italic">
+                    <img src="images/step.png" style="width: 100%;">
+                </figure>
+                <h4>Trajectory Generator</h4>
+                <p>The trajectory that the motor tracks is entered through the MATLAB client. For example, the entry <b>[0,0;1,180;3,-90;4,0;5,0]</b> means that at time 0 seconds, the motor angle should be at 0 degrees; at time 1 second, the motor should be at 180 degrees, and so on and so forth. The reference step input can be seen as red in the plot on the right. The actual trajectory that the motor achieved can be seen in blue. Unsurprisingly, there is a fair bit of error, since the motor has to overcome the inertia of the bar fixed onto the motor shaft.</p>
+                <h4>Motion Controller</h4>
+                <p>As can be seen from the above block-diagram, once the trajectory is entered through the MATLAB client, it is sent to the motion controller on the PIC32 over UART serial communication. The motion controller (which is running at 200 Hz in an interrupt) reads the current motor position from the encoder over SPI, converts that position into its corresponding angle (based on the number of ticks on the encoder and its quadrature nature), and compares it against the reference angle in the provided trajectory to get the angle error. PID control is then implemented using this error to output a reference current that should be tracked by the current controller so that the right amount of current is going through the motor terminals. After some tuning, the following gains were used (at least for tracking the step trajectory): $K_p=5$, $K_i=0$, and $K_d=200$.</p>
+
+
+                <h4>Current Controller</h4>
+                <figure style= "text-align: center; float: right; width: 40%; margin-left: 2%; font-style: italic">
+                    <img src="images/current.png" style="width: 100%;">
+                </figure>
+                <p>Moving onward in the block-diagram, the current controller takes the reference current provided by the motion controller and compares it to the current read from the current sensor to get the error. As hinted in the hardware section, the current sensor works by measuring the voltage drop across a 15 $m\Omega$ current-sense resistor which is then amplified using the MAX9918 current-sense amplifier. This allows the voltage (which is proportional to the motor current) to be read by the ADC input pin on the NU32. In order to determine the relationship between the ADC count and current, a "<i>calibration equation</i>" was generated through testing of the current sensor with known currents that would likely be experienced for various loadings of the motor.</p>
+                <figure style= "text-align: center; float: left; width: 40%; margin-right: 2%; font-style: italic">
+                    <img src="images/current_table.png" style="width: 100%;">
+                </figure>
+                <p>These currents were achieved by using combinations of one or two 20 $m\Omega$ power-resistors either in parallel or in series. The current and voltage was measured in each scenario by using an ammeter and oscilliscope. If those values checked out, then the ADC counts were measured by the NU32 in each of those scenarios which then tells us the relationship between ADC counts and current. The table with all of of these values can be seen right above. The equation determined was $Current=2.5(ADC)-1273.16$.</p>
+                <p>Anyway, with the current error known, another PID controller (this one running at 5 kHz) is implemented and outputs a PWM duty cycle that changes the voltage across the motor terminals (which thereby changes the current going through the motor) so that the reference current outputted from the motion controller earlier can be achieved. In order to determine some good gains for this controller, a 100 Hz $\pm$200mA reference current (shown in red in the above plot) was attempted to be tracked. The actual current trajectory is shown in blue. The gains determined were $K_p=1$, $K_i=0.05$, and $K_d=0.83$.</p>
+                <p>It should be noted that the PWM frequency controlling the voltage across the motor via the H-bridge (as described in the block diagram) was running at 20 kHz.</p>
+
+                <hr />
+                <h3>Demo Video</h3>
+                <p>A demo video of the DC Motor tracking cubic trajectories. The first one shown in the video is with bad PID gains, whereas the second attempt is with good PID gains. An example plot of the requested and desired trajectories are shown on the right. You may notice how the average error is much smaller than for a step trajectory input. This is because the changes in a cubic trajectory are more gradual whereas by a step input, they are instant. The gains used for this cubic trajectory were: $K_p=20$, $K_i=0$, and $K_d=200$.</p>
+                <div class="row">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/OauAbZUgttE" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                <div class="5u"><span class="image fit"><img src="images/cubic.png" alt="" /></span></div>
+                </div>
+            </section>

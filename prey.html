@@ -11,13 +11,17 @@ subtitle: Northwestern University&#58; Final Project
                         <li align="left">Python</li>
                         <li align="left">ROS</li>
                         <li align="left">OpenCV</li>
+                        <li align="left">3D Printing</li>
                     </ul>
 
                 <h3>Hardware</h3>
                 <ul>
-                    <li align="left">Two <a href="https://store.sphero.com/collections/sphero/products/sphero-2-0" target="blank">Sphero 2.0 Robots</a></li>
-                    <li align="left">Cameras for Image Processing</li>
-                    <li align="left">Wood for Laser Cutting</li>
+                    <li align="left">Two <a href="https://www.sphero.com/sphero-mini" target="blank">Sphero Mini Robots</a></li>
+                    <li align="left">Two <a href="https://www.amazon.com/dp/B0096KSBB0/ref=twister_B005HS4RF4?_encoding=UTF8&psc=1">Microsoft LifeCam Studio</a> Cameras</li>
+                    <li align="left">Two 3D-printed camera mounts</li>
+                    <li align="left">1/4" and 1/8" Baltic Birch Plywood for Laser Cutting</li>
+                    <li align="left">80/20 for building the Camera Rig</li>
+
                 </ul>
 
                 <hr />
@@ -33,6 +37,8 @@ subtitle: Northwestern University&#58; Final Project
                 </ul>
 
                 <p>The first order of business was to create the maze design since it is the playground within which the Sphero robots will be moving and from which close-loop feedback control will be implemented using image processing. Therefore, much of the Spring quarter was dedicated to accomplishing this objective.</p>
+
+                <p>The next order of business was to develop the code that would implement the close-loop feedback control of the Spheros using image processing. This took place during the following Fall quarter.</p>
 
                 <h4>Maze Fabrication</h4>
 
@@ -54,6 +60,7 @@ subtitle: Northwestern University&#58; Final Project
 
                 <p>Before building the full blown model, it was decided to first build a small scale version so that initial testing could be done with the Sphero control and Image Processing algorithms. Any modifications to the structure due to testing could then be incorporated into the full-scale model.</p>
 
+                <h5> Small Scale Model</h5>
                 <p>The small scale structure, both model and actual are shown side by size below. This <a href="https://github.com/mechwiz/maze_world" target="blank">Readme</a> goes through each part in the assembly and explains its purpose.</p>
                 <div class="row uniform 50%">
                     <div class="6u"><span class="image fit"><img src="images/smallscalesphero.PNG" alt="" /></span></div>
@@ -77,19 +84,65 @@ subtitle: Northwestern University&#58; Final Project
 
                 <p>The obstacles were made with a hollow press-fit design in order to conserve wood. A wood backing was glued on the opposite side of where the holes are located in order to prevent the dowels from being pushed through into the hollow interior.</p>
 
-                <h4>Sphero Control with ROS</h4>
-                <p>The Sphero robots will be controlled using the sphero_ros package developed first by <a href="https://github.com/mmwise/sphero_ros" target="blank">Melonee Wise</a> and then further developed in the <a href="https://github.com/MurpheyLab/sphero_ros" target="blank">Murphey Lab</a>. Due to major focus on the maze fabrication, progress has yet to be made in this area. The progress that has been made is verfying that I can connect with and control the Sphero 2.0 robot using ROS Kinetic with the <a href="http://mmwise.github.io/sphero_ros/" target="blank">Sphero Ros API</a> provided by Melonee Wise. It should also be mentioned that the Sphero 2.0 robot was chosen instead of the more recent <a href="https://store.sphero.com/collections/education/products/sprk-plus-education" target="blank">Sphero SPRK+</a> due to the fact that it's hackable as mentioned in the "Tech Specs" tab <a href="https://store.sphero.com/collections/sphero/products/sphero-2-0" target="blank">here</a> and because there seems to be an issue connecting to the SPRK+ as discussed <a href="https://github.com/mmwise/sphero_ros/issues/18" target="blank">here</a>.</p>
+                <h5>Full Scale Model</h5>
+                <p>The full scale structure, both model and actual are shown side by size below. This <a href="https://github.com/mechwiz/maze_world" target="blank">Readme</a> goes through each part in the assembly and explains its purpose.</p>
+                <div class="row uniform 50%">
+                    <div class="6u"><span class="image fit"><img src="images/full_scale.jpg" alt="" /></span></div>
+                    <div class="6u"><span class="image fit"><img src="images/full_scale_real.jpg" alt="" /></span></div>
+                </div>
 
+                <p>Based on testing on the small-scale maze and for space constraint reasons, some modifications were done for the full-scale maze. These include:</p>
+                <ul>
+                    <li>Making the full scale maze smaller. Initally, it measured around 11ft by 8.6ft which was too big for any space at Northwestern long term. Rather than minimizing the number of cells within the maze, each hexagonal cell was made smaller by changing each side dimension from 3.5 inches to 2.5 inches. This resulted in the full scale maze being 8ft x 6.25ft which fits snugly within the corner of Professor Maciver's lab. All modules were updated accordingly.</li>
+                    <li>Using <a href="https://www.sphero.com/sphero-mini">Sphero Mini Robots</a> instead of the Sphero 2.0 Robots since the 2.0 ones were too big.</li>
+                    <li>Laying a <a href="https://www.marinevinylfabric.com/products/clear-marine-vinyl?variant=14023793573972">clear vinyl mat</a> on the maze floor in order to make it one continous surface. This became necessary since after switching to the Sphero Mini robots, they sometimes got stuck due to discontinuous surfaces at the modular connection points due to module warping of the wood.</li>
+                </ul>
+
+                <h4>Sphero Control with ROS</h4>
+                <p>Before knowing that I was going to switch to using the Sphero Mini, all control with the Sphero 2.0 robots were done with the sphero_ros package developed first by <a href="https://github.com/mmwise/sphero_ros" target="blank">Melonee Wise</a> and then further developed in the <a href="https://github.com/MurpheyLab/sphero_ros" target="blank">Murphey Lab</a>. In order to control 2 robots simultaneously, I created my own <a href="https://github.com/mechwiz/sphero_ros">fork</a> as I had to do some modifications to the <b>sphero.py</b> node that would allow me to connect to specific bluetooth addresses. The <a href="http://mmwise.github.io/sphero_ros/" target="blank">Sphero Ros API</a> provided by Melonee Wise was also helpful in regards to knowing how to talk to the Sphero 2.0 robots. It should also be mentioned that the Sphero 2.0 robot was originally chosen instead of the more recent <a href="https://store.sphero.com/collections/education/products/sprk-plus-education" target="blank">Sphero SPRK+</a> due to the fact that it's hackable as mentioned in the "Tech Specs" tab <a href="https://store.sphero.com/collections/sphero/products/sphero-2-0" target="blank">here</a> and because there seems to be an issue connecting to the SPRK+ as discussed <a href="https://github.com/mmwise/sphero_ros/issues/18" target="blank">here</a>.</p>
+
+                <p>One main disadvantage to switching to the Sphero Mini robots was that the sphero_ros package was incompatible with them. Luckily, an <a href="https://github.com/MProx/Sphero_mini">unofficial API</a> was created for them by <a href="https://github.com/MProx">MProx</a> which proved to be just what I needed to control them. Occasionally, there are bluetooth connection problems that I discuss in my <a href="https://github.com/mechwiz/maze_control/blob/master/README.md">Readme</a> and there were some modifications I had to make to his library in order to allow for simultaneous control of 2 robots, but the API works well overall. A nice advantage of using the Sphero Mini robots though is the fact that they have much less inertia than the Sphero 2.0 robots. This means controlling them along a path is more fluid than for the 2.0 robots. On the flipside, they have a greater tendency to get stuck at discontinuities due to module warpage between connection points, but the vinyl mat should take care of that.</p>
+
+                <p>To demonstrate the differences of controlling the Sphero 2.0 and Sphero Mini robots, take a look at the gifs below. The first set shows control of 2 Sphero 2.0 robots along their respective paths. Note how they oscillate somewhat as they follow their paths and how sharp turns can be quite a challenge for them to overcome.</p>
+
+                <div align="center">
+                  <img src="images/small_scale_demo2.gif" width="500" />
+                  <img src="images/small_scale_demo_real2.gif" width="500" />
+                </div>
+
+                <p>Now take a look at how the Sphero Mini robots handle the sharp turns. They are much more smoother and are able to do them at a faster speed than the Sphero 2.0 robots. Hence, it seems that the advantages of the Sphero Mini robots outweigh its disadvantages all things considered.</p>
+
+                <div align="center">
+                  <img src="images/small_scale_demo.gif" width="500" />
+                  <img src="images/small_scale_demo_real.gif" width="500" />
+                </div>
+
+                <p>To read more about how the spheros were calibrated and controlled, take a look at my <a href="https://github.com/mechwiz/maze_control/blob/master/README.md">Readme</a></p>
                 <h4>Image Processing</h4>
-                <p>In order to determine the location of the Sphero robots within the maze, computer vision feedback will be used. Preliminarry planning for how this will work involves using multiple cameras to capture the whole board since it will be very large - around 11ft x 8.6 ft. The idea will then be to calibrate those cameras so that we know where each camera is relative to the others and the maze so that the image can be peiced together. This way, each robot's location can be determined.</p>
+                <p>In order to determine the location of the Sphero robots within the maze, computer vision feedback was used. For the small scale maze, color segmentation in the HSV space was used to isolate the contour of the maze from which a convexHull could be extrapolated using OpenCV (the green outline shown in the gifs above). Then, the 6 points of the convexHull could be determined from that which would correspond to the 6 points of the hexagonal shaped maze (the blue dots shown in the gifs above). After taking 100 samples of these points, the mode for each point was determined in order to increase accuracy of finding the right points. With these 6 points, all of the cells within the maze could be determined (shown as red dots in the gifs above).</p>
+
+                <p>Color segmentation in the HSV space was also used to isolate the individually colored spheros. In the gifs above, the red sphero outlined in green was considered to be the <i>prey</i> and the blue sphero outlined in blue was considered to be the <i>predator</i>.</p>
+
+                <p>A similar approach was implemented for the full scale maze. The main difference was that instead of using the verticies of the points of the octogonal maze to inerpolate all of the other cell points, 8 pieces of red tape were placed in key locations as shown below on the left. From this, all points could be interpolated as shown in the picture below on the right. This had to be done this way since the lineup of the cells are not as symmetric in this nonregular octogonal maze as it is in the small-scale regular hexagonal maze. It is important to note that finding the contour of the maze and its correspondig vertices were still important because it allows me to segment my region of interest from whatever objects are laying outside the maze. For example, any red object outside the maze would not be considred as a <i>red tape</i> key location which helps eliminate false positives.</p>
+                <div align="center">
+                  <img src="images/maze_setup1.png" width="550"/>
+                  <img src="images/maze_setup2.png" width="550"/>
+                </div>
+                <p></p>
+                <p>You may also notice that it looks like the images for the full-scale maze above look stitched together. You would be correct. Real-time image stitching (based off this amazing <a href="https://www.pyimagesearch.com/2016/01/25/real-time-panorama-and-image-stitching-with-opencv/">pyimagesearch blogpost</a> by <a href="https://www.pyimagesearch.com/author/adrian/">Adrian Rosebrock</a>) was done since 2 cameras were used to visualize the maze. This was done because if one wide-angle camera was used in the center, then obstacles further along on the x and y axes from the camera would inhibit its field of view. This means that if the spheros were behind certain obstacles at the right angle, the camera would not be able to pick them up. With 2 cameras, however, any blind spots in one camera's FOV due to obstacle blockage may be picked up from the other camera. These cameras were mounted using custom made 3D-printed mounts onto a custom made camera rig made out of 80/20.</p>
+
+                <p>To understand more about how a user would setup all the image processing nodes as well as how to calibrate all the color segmentation parameters, read my <a href="https://github.com/mechwiz/maze_control/blob/master/README.md">Readme</a> here.</p>
 
                 <hr />
+                <h3>Demo</h3>
+                <p>A video demo of the full-scale maze is coming soon.</p>
+                <hr />
                 <h3>Future Steps</h3>
-                <p>The next steps in this project will take place over the summer and Fall quarters and will include:</p>
+                <p>These are some future steps to implement based on how advanced the project becomes down the road such as when mice begin to be put into the maze:</p>
                 <ul>
-                    <li align="left">Writing ROS control scripts to move each robot from cell to cell reliably</li>
-                    <li align="left">Writing the image processing scripts to provide the feedback loop to the ROS robotic control scripts</li>
-                    <li align="left">Incorporating any modificiaitons to the final maze design layout and laser cutting all the pieces for the full-scale maze</li>
+                    <li align="left">Either covering the maze with acrylic or plexiglass sheets like <a href="https://www.homedepot.com/p/OPTIX-48-in-x-96-in-x-1-8-in-Clear-Acrylic-Sheet-MC-100S/205351353">these sheets</a> or increasing the height of the maze walls and obstacles in order to prevent the mice from jumping out of the maze. If the height of the obstacles are modified to be higher, then more cameras may need to be added so that any blindspots caused by the height of the obstacles in some cameras can be picked up by others.</li>
+                    <li align="left">Adding in capability to track the path a mouse moves within the maze when chased by a sphero.</li>
+                    <li align="left">Adding in Real-Time planning capabiliy based on scenarios modeled within the maze. When this occurs, obstacle detection will need to be added as well.</li>
                 </ul>
 
             </section>
